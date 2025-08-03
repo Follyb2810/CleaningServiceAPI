@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/user/Desktop/follyb/dev/CleaningServiceAPI/CleaningServiceAPI.csproj": {}
+    "/Users/user/Desktop/follyb/dev/CleaningServiceSolution/CleaningServiceAPI/CleaningServiceAPI.csproj": {}
   },
   "projects": {
-    "/Users/user/Desktop/follyb/dev/CleaningServiceAPI/CleaningServiceAPI.csproj": {
+    "/Users/user/Desktop/follyb/dev/CleaningServiceSolution/CleaningServiceAPI/CleaningServiceAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/user/Desktop/follyb/dev/CleaningServiceAPI/CleaningServiceAPI.csproj",
+        "projectUniqueName": "/Users/user/Desktop/follyb/dev/CleaningServiceSolution/CleaningServiceAPI/CleaningServiceAPI.csproj",
         "projectName": "CleaningServiceAPI",
-        "projectPath": "/Users/user/Desktop/follyb/dev/CleaningServiceAPI/CleaningServiceAPI.csproj",
+        "projectPath": "/Users/user/Desktop/follyb/dev/CleaningServiceSolution/CleaningServiceAPI/CleaningServiceAPI.csproj",
         "packagesPath": "/Users/user/.nuget/packages/",
-        "outputPath": "/Users/user/Desktop/follyb/dev/CleaningServiceAPI/obj/",
+        "outputPath": "/Users/user/Desktop/follyb/dev/CleaningServiceSolution/CleaningServiceAPI/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/user/.nuget/NuGet/NuGet.Config"
@@ -45,9 +45,45 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[9.0.7, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.7, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.7, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[9.0.3, )"
             }
           },
           "imports": [

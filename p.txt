@@ -1,0 +1,154 @@
+using Microsoft.EntityFrameworkCore;
+using CleaningService.Data;
+using CleaningService.Services;
+using System.Text.Json.Serialization;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.WriteIndented = true;
+    });
+
+// Add Entity Framework
+builder.Services.AddDbContext<CleaningServiceDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Register services
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
+
+// Add CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
+// Add Swagger/OpenAPI
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "Cleaning Service API", Version = "v1" });
+});
+
+// Add background services for recurring tasks
+builder.Services.AddHostedService<RecurringBookingService>();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
+}
+
+app.UseHttpsRedirection();
+app.UseCors("AllowAll");
+app.UseAuthorization();
+app.MapControllers();
+
+// Ensure database is created and seeded
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<CleaningServiceDbContext>();
+    context.Database.EnsureCreated();
+}
+
+app.Run();
+
+// Background service for handling recurring bookings
+public class RecurringBookingService : BackgroundService
+{
+    private readonly IServiceProvider _serviceProvider;
+    private readonly ILogger<RecurringBookingService> _logger;
+
+    public RecurringBookingService(IServiceProvider serviceProvider, ILogger<RecurringBookingService> logger)
+    {
+        _serviceProvider = serviceProvider;
+        _logger = logger;
+    }
+
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            try
+            {
+                using var scope = _serviceProvider.CreateScope();
+                var context = scope.ServiceProvider.GetRequiredService<CleaningServiceDbContext>();
+                var subscriptionService = scope.ServiceProvider.GetRequiredService<ISubscriptionService>();
+
+                // Find active subscriptions that need new bookings
+                var activeSubscriptions = await context.Subscriptions
+                    .Include(s => s.SubscriptionPlan)
+                    .Where(s => s.Status == SubscriptionStatus.Active && 
+                               s.NextCleaningDate <= DateTime.UtcNow.AddDays(7))
+                    .ToListAsync(stoppingToken);
+
+                foreach (var subscription in activeSubscriptions)
+                {
+                    try
+                    {
+                        await subscriptionService.GenerateRecurringBookingsAsync(subscription.Id);
+                        _logger.LogInformation($"Generated recurring bookings for subscription {subscription.Id}");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, $"Error generating bookings for subscription {subscription.Id}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in recurring booking service");
+            }
+
+            // Run every 24 hours
+            await Task.Delay(TimeSpan.FromHours(24), stoppingToken);
+        }
+    }
+}
+
+// appsettings.json configuration
+/*
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning",
+      "Microsoft.EntityFrameworkCore.Database.Command": "Information"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=CleaningServiceDb;Trusted_Connection=true;MultipleActiveResultSets=true"
+  }
+}
+*/
+
+// appsettings.Development.json
+/*
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning",
+      "Microsoft.EntityFrameworkCore.Database.Command": "Information"
+    }
+  },
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=CleaningServiceDb_Dev;Trusted_Connection=true;MultipleActiveResultSets=true"
+  }
+}
+*/
