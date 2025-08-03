@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FeatureGenerator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+08cd3211f4d6c3b27116098a8a151fe9a5b64d86")]
 [assembly: System.Reflection.AssemblyProductAttribute("FeatureGenerator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FeatureGenerator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

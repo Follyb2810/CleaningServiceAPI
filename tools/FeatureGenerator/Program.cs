@@ -13,15 +13,23 @@ class CreateFeature
             return;
         }
 
+        // Get the feature name
         string featureName = args[0];
-        string pascal = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(featureName.ToLower());
-        string kebab = featureName.ToLower();
-        string baseDir = Path.Combine("Modules", pascal); // Use PascalCase folder names
 
-        if (!Directory.Exists(baseDir))
-        {
-            Directory.CreateDirectory(baseDir);
-        }
+        // PascalCase and kebab-case variations
+        TextInfo textInfo = CultureInfo.InvariantCulture.TextInfo;
+        string pascal = textInfo.ToTitleCase(featureName.ToLower());
+        string kebab = featureName.ToLowerInvariant();
+
+        // Get absolute path to CleaningServiceAPI/Modules
+        string scriptDir = AppDomain.CurrentDomain.BaseDirectory;
+        string rootPath = Path.GetFullPath(Path.Combine(scriptDir, "..", "..", "..", "..", "..","..")); // project root
+        string modulesPath = Path.Combine(rootPath, "CleaningServiceAPI", "Modules");
+        string featurePath = Path.Combine(modulesPath, pascal);
+
+        // Create base folder
+        if (!Directory.Exists(featurePath))
+            Directory.CreateDirectory(featurePath);
 
         var files = new Dictionary<string, string>
         {
@@ -36,6 +44,7 @@ namespace CleaningServiceAPI.Modules.{pascal}.Controllers;
 public class {pascal}Controller : ControllerBase
 {{
     private readonly {pascal}Service _service;
+
     public {pascal}Controller({pascal}Service service)
     {{
         _service = service;
@@ -110,16 +119,15 @@ public static class {pascal}Module
 
         foreach (var file in files)
         {
-            string filePath = Path.Combine("CleaningServiceAPI", "Modules", file.Key);
-            string dir = Path.GetDirectoryName(filePath) ?? "";
+            string filePath = Path.Combine(modulesPath, file.Key);
+            string dir = Path.GetDirectoryName(filePath)!;
+
             if (!Directory.Exists(dir))
-            {
                 Directory.CreateDirectory(dir);
-            }
 
             File.WriteAllText(filePath, file.Value.TrimStart());
         }
 
-        Console.WriteLine($"✅ Feature '{featureName}' created in Modules/{pascal}");
+        Console.WriteLine($"✅ Feature '{pascal}' created in CleaningServiceAPI/Modules/{pascal}");
     }
 }
