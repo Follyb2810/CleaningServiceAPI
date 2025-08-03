@@ -39,10 +39,10 @@ namespace CleaningServiceAPI.Modules.Payment.Models
         // [Column(TypeName = "decimal(10,2)")]
         public decimal Amount { get; set; }
 
-        public PaymentStatus Status { get; set; }
-        public PaymentMethod Method { get; set; }
+        public PaymentStatus? Status { get; set; }
+        public PaymentMethod? Method { get; set; }
 
-        public string PaymentReference { get; set; }
+        public string? PaymentReference { get; set; }
         public string? TransactionId { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

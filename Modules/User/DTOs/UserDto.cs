@@ -1,3 +1,4 @@
+using CleaningServiceAPI.Modules.User.Models;
 namespace CleaningServiceAPI.Modules.User.DTOs
 {
 
@@ -5,8 +6,10 @@ namespace CleaningServiceAPI.Modules.User.DTOs
     public class UserDto
     {
         public string FullName { get; set; } = string.Empty;
+        public int Id { get; set; }
+        // public string FullName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public string Role { get; set; } = "Client";
+        public UserRole Role { get; set; } = UserRole.Client;
     }
     public class CreateUserDto
     {
@@ -16,6 +19,11 @@ namespace CleaningServiceAPI.Modules.User.DTOs
         public string Address { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }
+    }
+    public class UpdateUserDto
+    {
+        public string FullName { get; set; } = string.Empty;
+        public UserRole Role { get; set; } = UserRole.Client;
     }
 }
 

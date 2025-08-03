@@ -10,6 +10,8 @@ builder.Services.AddOpenApi();
 // builder.Services.AddControllers();
 // builder.Services.AddDbContext<AppDbContext>(...);
 // builder.Services.AddUserModule();
+// services.AddScoped(typeof(IBaseRepository<>), typeof(Repository<>));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

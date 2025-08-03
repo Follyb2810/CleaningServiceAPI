@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
+using CleaningServiceAPI.Modules.User.Models;
 using CleaningServiceAPI.Modules.User.Services;
 
 namespace CleaningServiceAPI.Modules.User.Controllers
 {
-
-
     [ApiController]
-    [Route("api/user")]
+    [Route("api/users")]
     public class UserController : ControllerBase
     {
         private readonly UserService _service;
@@ -16,24 +15,25 @@ namespace CleaningServiceAPI.Modules.User.Controllers
             _service = service;
         }
 
-        // [HttpGet]
-        // public IActionResult First()
-        // {
-        //     var result = _service.First();
-        //     return Ok(result);
-        // }
-        // [HttpGet("{email}")]
-        // public async Task<IActionResult> Get(string email)
-        // {
-        //     var user = await _service.GetUserByEmail(email);
-        //     return user == null ? NotFound() : Ok(user);
-        // }
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _service.GetAllUsersAsync();
+            return Ok(users);
+        }
 
-        // [HttpPost]
-        // public async Task<IActionResult> Create([FromBody] User user)
-        // {
-        //     await _service.Create(user);
-        //     return CreatedAtAction(nameof(Get), new { email = user.Email }, user);
-        // }
+        [HttpGet("{email}")]
+        public async Task<IActionResult> GetByEmail([FromBody]  string email)
+        {
+            var user = await _service.GetUserByEmailAsync(email);
+            return user == null ? NotFound() : Ok(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateUser([FromBody] UserModel user)
+        {
+            await _service.CreateUserAsync(user);
+            return CreatedAtAction(nameof(GetByEmail), new { email = user.Email }, user);
+        }
     }
 }

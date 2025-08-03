@@ -39,7 +39,7 @@ namespace CleaningServiceAPI.Modules.Booking.Models
         public int DurationHours { get; set; }
 
         public string ServiceAddress { get; set; }
-        public string SpecialInstructions { get; set; }
+        public string SpecialInstructions { get; set; }= string.Empty;
 
         public BookingStatus Status { get; set; } = BookingStatus.Scheduled;
         public BookingType Type { get; set; } // OneTime or Subscription

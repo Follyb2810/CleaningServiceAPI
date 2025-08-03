@@ -19,7 +19,7 @@ namespace CleaningServiceAPI.Modules.Cleaner.Models
         [Phone]
         public string PhoneNumber { get; set; }
 
-        public string Specialties { get; set; } // JSON array of cleaning specialties
+        public string Specialties { get; set; } = string.Empty;
         public bool IsAvailable { get; set; } = true;
         public decimal HourlyRate { get; set; }
 

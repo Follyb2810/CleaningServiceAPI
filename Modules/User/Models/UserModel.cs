@@ -22,12 +22,12 @@ namespace CleaningServiceAPI.Modules.User.Models
 
         [Required]
         [Phone]
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }= string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
         public UserRole Role { get; set; } = UserRole.Client;
-        public string Address { get; set; }
-        public string City { get; set; }
-        public string PostalCode { get; set; }
+        public string Address { get; set; }= string.Empty;
+        public string City { get; set; }= string.Empty;
+        public string PostalCode { get; set; }= string.Empty;
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }

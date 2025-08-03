@@ -19,7 +19,8 @@ namespace CleaningServiceAPI.Data
         public CleaningServiceDbContext(DbContextOptions<CleaningServiceDbContext> options) : base(options)
         {
         }
-
+        //? use 
+        //  public DbSet<UserModel> UserModels => Set<UserModel>();
         public DbSet<UserModel> Users { get; set; }
         public DbSet<CleanerModel> Cleaners { get; set; }
         public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }

@@ -47,18 +47,18 @@ namespace CleaningServiceAPI.Modules.Subscription.Models
         public UserModel User { get; set; }
 
         public int SubscriptionPlanId { get; set; }
-        public SubscriptionPlan SubscriptionPlan { get; set; }
+        public SubscriptionPlan? SubscriptionPlan { get; set; }
 
         public SubscriptionStatus Status { get; set; } = SubscriptionStatus.Active;
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public DateTime NextCleaningDate { get; set; }
+        public DateTime? NextCleaningDate { get; set; }
 
         // [Column(TypeName = "decimal(10,2)")]
         public decimal AmountPaid { get; set; }
 
         public string PaymentMethod { get; set; }
-        public string PaymentReference { get; set; }
+        public string PaymentReference { get; set; }= string.Empty;
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
