@@ -6,15 +6,20 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using CleaningServiceAPI.Modules.User.Models;
+using CleaningServiceAPI.Common;
+
 namespace CleaningServiceAPI.Common
 {
     public class JwtService
     {
         private readonly IConfiguration _config;
+        private readonly JwtOptions _jwt;
 
-        public JwtService(IConfiguration config)
+
+        public JwtService(IConfiguration config, JwtOptions jwt)
         {
             _config = config;
+            _jwt = jwt;
         }
 
         public string GenerateToken(UserModel user, IList<string> roles)
@@ -25,7 +30,9 @@ namespace CleaningServiceAPI.Common
                 // new Claim(JwtRegisteredClaimNames.Sub, user.Id),
     
                  new Claim("id", user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email ?? "")
+            new Claim(JwtRegisteredClaimNames.Email, user.Email ?? ""),
+            // new Claim(ClaimTypes.Email, user.Email),
+            // new Claim(ClaimTypes.Role, user.Role),
 
         };
 
@@ -44,6 +51,12 @@ namespace CleaningServiceAPI.Common
                 expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(_config["Jwt:ExpireMinutes"])),
                 signingCredentials: creds
             );
+            // var token = new JwtSecurityToken(
+            // issuer: _jwt.Issuer,
+            // audience: _jwt.Audience,
+            // claims: claims,
+            // expires: DateTime.UtcNow.AddHours(1),
+            // signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
