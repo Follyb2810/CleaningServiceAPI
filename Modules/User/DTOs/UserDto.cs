@@ -6,7 +6,8 @@ namespace CleaningServiceAPI.Modules.User.DTOs
     public class UserDto
     {
         public string FullName { get; set; } = string.Empty;
-        public int Id { get; set; }
+        public string Id { get; set; }
+        // public int Id { get; set; }
         public string Email { get; set; } = string.Empty;
         public UserRole Role { get; set; } = UserRole.Client;
     }

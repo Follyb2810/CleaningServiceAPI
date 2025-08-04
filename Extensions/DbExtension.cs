@@ -20,6 +20,7 @@ namespace CleaningServiceAPI.Extensions
             // {
             //     var connectionString = builder.Configuration.GetConnectionString("follydb");
             //     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            //options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
             // });
             return _service;
         }

@@ -14,7 +14,7 @@ namespace CleaningServiceAPI.Modules.User.Mappers
                 Id = user.Id,
                 FullName = user.FullName,
                 Email = user.Email,
-                Role = user.Role
+                // Role = user.Role
             };
         }
 
@@ -25,7 +25,7 @@ namespace CleaningServiceAPI.Modules.User.Mappers
                 FullName = dto.FullName,
                 Email = dto.Email,
                 PasswordHash = passwordHash,
-                Role = UserRole.Client
+                // Role = UserRole.Client
             };
         }
         public static List<UserDto> ToDtoList(IEnumerable<UserModel> users)
@@ -35,7 +35,7 @@ namespace CleaningServiceAPI.Modules.User.Mappers
         public static void MapUpdate(UpdateUserDto dto, UserModel user)
         {
             user.FullName = dto.FullName;
-            user.Role = dto.Role;
+            // user.Role = dto.Role;
         }
     }
 

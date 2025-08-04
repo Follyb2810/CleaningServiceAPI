@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using CleaningServiceAPI.Modules.User.Models;
 
 namespace CleaningServiceAPI.Extensions
 {

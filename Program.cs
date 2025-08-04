@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using CleaningServiceAPI.Common;
 using Microsoft.Extensions.Options;
 using CleaningServiceAPI.Extensions;
+using CleaningServiceAPI.Seed;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +20,12 @@ builder.Services.AddSwagger();
 
 builder.Services.AddWithCors();
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
-builder.Services.AddDb();
+// builder.Services.AddDb();
+// builder.Services.AddIdentity();
+
+// builder.Services.AddIdentity<UserModel, IdentityRole>()
+//     .AddEntityFrameworkStores<ApplicationDbContext>()
+//     .AddDefaultTokenProviders();
 // builder.Services.AddTransient<UserMiddleware>();
 
 // builder.Services.AddScoped<TokenService>();
@@ -29,6 +35,12 @@ builder.Services.AddDb();
 // services.AddScoped(typeof(IBaseRepository<>), typeof(Repository<>));
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    await RoleSeeder.SeedRolesAsync(roleManager);
+}
 
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())
