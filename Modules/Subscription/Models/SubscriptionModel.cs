@@ -1,7 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
-// using CleaningServiceAPI.Modules.Subscription.Models;
-// using CleaningServiceAPI.Modules.User.Models;
 using CleaningServiceAPI.Modules.User.Models;
 using CleaningServiceAPI.Modules.Cleaner.Models;
 using CleaningServiceAPI.Modules.Booking.Models;
@@ -32,7 +30,8 @@ namespace CleaningServiceAPI.Modules.Subscription.Models
         public int DurationHours { get; set; }
         public bool IsActive { get; set; } = true;
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+        // public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         // Navigation properties
         public ICollection<SubscriptionModel> Subscriptions { get; set; } = new List<SubscriptionModel>();
@@ -43,25 +42,30 @@ namespace CleaningServiceAPI.Modules.Subscription.Models
     {
         public int Id { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public UserModel User { get; set; }
 
         public int SubscriptionPlanId { get; set; }
         public SubscriptionPlan? SubscriptionPlan { get; set; }
 
         public SubscriptionStatus Status { get; set; } = SubscriptionStatus.Active;
-        public DateTime StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
-        public DateTime? NextCleaningDate { get; set; }
+        // public DateTime StartDate { get; set; }
+        public DateTimeOffset StartDate { get; set; }
+        public DateTimeOffset? EndDate { get; set; }
+        public DateTimeOffset? NextCleaningDate { get; set; }
 
         // [Column(TypeName = "decimal(10,2)")]
         public decimal AmountPaid { get; set; }
 
         public string PaymentMethod { get; set; }
-        public string PaymentReference { get; set; }= string.Empty;
+        public string PaymentReference { get; set; } = string.Empty;
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime? UpdatedAt { get; set; }
+        // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        // public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        // public DateTime CreatedAt { get; set; } = DateTimeOffset.Now;
+        public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
+        public DateTimeOffset? UpdatedAt { get; set; }
+        // public DateTime? UpdatedAt { get; set; }
 
         // Navigation properties
         public ICollection<BookingModel> Bookings { get; set; } = new List<BookingModel>();

@@ -16,7 +16,7 @@ namespace CleaningServiceAPI.User.Modules
             // builder.Services.AddScoped<IUserRepository, UserRepository>();
             // builder.Services.AddScoped<UserService>(); // optional: use interface for service if you want
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<UserService>(); // optional: use interface for service if you want
+            services.AddScoped<UserService>(); 
 
 
             return services;

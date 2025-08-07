@@ -1,6 +1,5 @@
 using CleaningServiceAPI.Modules.Subscription.Models;
 using CleaningServiceAPI.Modules.Booking.Models;
-using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
@@ -18,7 +17,7 @@ namespace CleaningServiceAPI.Modules.User.Models
         [Required]
         [StringLength(100)]
         public string FullName { get; set; } = string.Empty;
-        
+
         //* all care for IdentityUser
         // [Required]
         // [EmailAddress]
@@ -32,9 +31,13 @@ namespace CleaningServiceAPI.Modules.User.Models
         public string Address { get; set; } = string.Empty;
         public string City { get; set; } = string.Empty;
         public string PostalCode { get; set; } = string.Empty;
+        public bool IsDeleted { get; set; } = false;
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime? UpdatedAt { get; set; }
+        // public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        // public DateTime CreatedAt { get; set; } = DateTimeOffset.Now;
+        // public DateTime? UpdatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
+        public DateTimeOffset? UpdatedAt { get; set; }
 
         // Navigation properties
         public ICollection<SubscriptionModel> Subscriptions { get; set; } = new List<SubscriptionModel>();

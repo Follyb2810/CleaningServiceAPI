@@ -9,7 +9,7 @@ namespace CleaningServiceAPI.Modules.User.DTOs
         public string Id { get; set; }
         // public int Id { get; set; }
         public string Email { get; set; } = string.Empty;
-        public UserRole Role { get; set; } = UserRole.Client;
+        // public UserRole Role { get; set; } = UserRole.Client;
     }
     public class CreateUserDto
     {
@@ -19,11 +19,17 @@ namespace CleaningServiceAPI.Modules.User.DTOs
         public string Address { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }
+        public string Password { get; set; }
     }
     public class UpdateUserDto
     {
         public string FullName { get; set; } = string.Empty;
-        public UserRole Role { get; set; } = UserRole.Client;
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string PostalCode { get; set; }
+        // public UserRole Role { get; set; } = UserRole.Client;
     }
 }
 

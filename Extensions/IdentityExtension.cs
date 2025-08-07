@@ -15,18 +15,20 @@ namespace CleaningServiceAPI.Extensions
         public static IServiceCollection AddIdentity(this IServiceCollection _services)
         {
             _services.AddIdentity<UserModel, IdentityRole>(options =>
-{
-    options.Password.RequireDigit = false;
-    options.Password.RequireLowercase = false;
-    options.Password.RequiredLength = 5;
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-    options.Lockout.MaxFailedAccessAttempts = 5;
-    options.SignIn.RequireConfirmedAccount = false;
-    options.User.RequireUniqueEmail = true;
-})
-.AddEntityFrameworkStores<CleaningServiceDbContext>()
-.AddDefaultTokenProviders();
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredLength = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.SignIn.RequireConfirmedAccount = false;
+                options.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<CleaningServiceDbContext>()
+            .AddDefaultTokenProviders();
+
             return _services;
         }
     }
+
 }

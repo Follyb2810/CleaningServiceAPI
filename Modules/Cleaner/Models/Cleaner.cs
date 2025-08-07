@@ -23,8 +23,12 @@ namespace CleaningServiceAPI.Modules.Cleaner.Models
         public bool IsAvailable { get; set; } = true;
         public decimal HourlyRate { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime? UpdatedAt { get; set; }
+        // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        // public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        // public DateTime CreatedAt { get; set; } = DateTimeOffset.Now;
+        // public DateTime? UpdatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
+        public DateTimeOffset? UpdatedAt { get; set; }
 
         // Navigation properties
         public ICollection<BookingModel> Bookings { get; set; } = new List<BookingModel>();
@@ -44,6 +48,6 @@ namespace CleaningServiceAPI.Modules.Cleaner.Models
 
         public bool IsAvailable { get; set; } = true;
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
     }
 };

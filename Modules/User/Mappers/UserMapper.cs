@@ -1,20 +1,18 @@
 using CleaningServiceAPI.Modules.User.Models;
 using CleaningServiceAPI.Modules.User.DTOs;
 
-
 namespace CleaningServiceAPI.Modules.User.Mappers
 {
-
     public static class UserMapper
     {
         public static UserDto ToDto(UserModel user)
         {
             return new UserDto
             {
-                Id = user.Id,
+                Id = user.Id.ToString(), 
                 FullName = user.FullName,
-                Email = user.Email,
-                // Role = user.Role
+                Email = user.Email
+                // Role = user.Role 
             };
         }
 
@@ -25,41 +23,28 @@ namespace CleaningServiceAPI.Modules.User.Mappers
                 FullName = dto.FullName,
                 Email = dto.Email,
                 PasswordHash = passwordHash,
-                // Role = UserRole.Client
+                PhoneNumber = dto.PhoneNumber,
+                Address = dto.Address,
+                City = dto.City,
+                PostalCode = dto.PostalCode,
+                CreatedAt = DateTime.UtcNow
             };
         }
+
         public static List<UserDto> ToDtoList(IEnumerable<UserModel> users)
         {
             return users.Select(ToDto).ToList();
         }
-        public static void MapUpdate(UpdateUserDto dto, UserModel user)
+
+        public static void MapUpdate(this UserModel user, UpdateUserDto dto)
         {
             user.FullName = dto.FullName;
-            // user.Role = dto.Role;
+            user.Email = dto.Email;
+            user.PhoneNumber = dto.PhoneNumber;
+            user.Address = dto.Address;
+            user.City = dto.City;
+            user.PostalCode = dto.PostalCode;
+            user.UpdatedAt = DateTime.UtcNow;
         }
     }
-
-
-    // public static class UserMapper
-    // {
-    //     // public static UserDto ToDto(object entity)
-    //     // {
-    //     //     return new UserDto
-    //     //     {
-    //     //         FullName = user.FullName,
-    //     //         Email = user.Email,
-    //     //         Role = user.Role.ToString()
-    //     //     };
-    //     // }
-    //     // public static object ToDtos(object entity)
-    //     // {
-    //     //     return new UserDto
-    //     //     {
-    //     //         FullName = user.FullName,
-    //     //         Email = user.Email,
-    //     //         Role = user.Role.ToString()
-    //     //     };
-    //     // }
-    // }
-
 }

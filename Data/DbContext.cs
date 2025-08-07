@@ -11,17 +11,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace CleaningServiceAPI.Data
 {
-    public class CleaningServiceDbContext : DbContext
+    public class CleaningServiceDbContext : IdentityDbContext<UserModel>
     {
         public CleaningServiceDbContext(DbContextOptions<CleaningServiceDbContext> options) : base(options)
         {
         }
         //? use 
         //  public DbSet<UserModel> UserModels => Set<UserModel>();
-        public DbSet<UserModel> Users { get; set; }
+        // public DbSet<UserModel> Users { get; set; }
         public DbSet<CleanerModel> Cleaners { get; set; }
         public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
         public DbSet<SubscriptionModel> Subscriptions { get; set; }
@@ -37,14 +36,24 @@ namespace CleaningServiceAPI.Data
             modelBuilder.Entity<UserModel>(entity =>
             {
                 entity.HasIndex(e => e.Email).IsUnique();
-                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+                // entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+                // entity.Property(e => e.CreatedAt).HasDefaultValueSql("NOW()");
+                entity.Property(e => e.CreatedAt)
+    .HasColumnType("timestamp with time zone")
+    .HasDefaultValueSql("NOW()");
+
             });
 
             // Cleaner configuration
             modelBuilder.Entity<CleanerModel>(entity =>
             {
                 entity.HasIndex(e => e.Email).IsUnique();
-                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+                // entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+                // entity.Property(e => e.CreatedAt).HasDefaultValueSql("NOW()");
+                entity.Property(e => e.CreatedAt)
+    .HasColumnType("timestamp with time zone")
+    .HasDefaultValueSql("NOW()");
+
                 entity.Property(e => e.HourlyRate).HasPrecision(10, 2);
             });
 
@@ -61,7 +70,12 @@ namespace CleaningServiceAPI.Data
                     .HasForeignKey(s => s.SubscriptionPlanId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+                // entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+                // entity.Property(e => e.CreatedAt).HasDefaultValueSql("NOW()");
+                entity.Property(e => e.CreatedAt)
+    .HasColumnType("timestamp with time zone")
+    .HasDefaultValueSql("NOW()");
+
             });
 
             // Booking configuration
@@ -82,7 +96,12 @@ namespace CleaningServiceAPI.Data
                     .HasForeignKey(b => b.CleanerId)
                     .OnDelete(DeleteBehavior.SetNull);
 
-                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+                // entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+                // entity.Property(e => e.CreatedAt).HasDefaultValueSql("NOW()");
+                entity.Property(e => e.CreatedAt)
+    .HasColumnType("timestamp with time zone")
+    .HasDefaultValueSql("NOW()");
+
             });
 
             // CleanerAvailability configuration
@@ -114,7 +133,12 @@ namespace CleaningServiceAPI.Data
                     .HasForeignKey(p => p.BookingId)
                     .OnDelete(DeleteBehavior.SetNull);
 
-                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+                // entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+                // entity.Property(e => e.CreatedAt).HasDefaultValueSql("NOW()");
+                entity.Property(e => e.CreatedAt)
+    .HasColumnType("timestamp with time zone")
+    .HasDefaultValueSql("NOW()");
+
             });
 
             // Seed data

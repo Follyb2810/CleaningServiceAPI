@@ -22,5 +22,20 @@ namespace CleaningServiceAPI.Modules.Booking.Controllers
             var result = _service.First();
             return Ok(result);
         }
+        [HttpGet("/all")]
+        public IActionResult GetFirst()
+        {
+            var result = _service.First();
+            var now = DateTime.Now;
+            now.AddDays(1);
+            // now.
+            now.AddDays(1);
+            // now.SubtractDays(1);
+            now.AddDays(-1);
+            now.AddDays(1);
+
+
+            return Ok(result);
+        }
     }
 }

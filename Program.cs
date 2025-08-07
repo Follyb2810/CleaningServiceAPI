@@ -17,17 +17,21 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 // builder.Services.AddSwaggerGen();
 builder.Services.AddSwagger();
+// var corsOptions = builder.Configuration.GetSection("Cors").Get<CorsOptions>();
+// builder.Services.AddWithCors(corsOptions);
 
 builder.Services.AddWithCors();
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
-// builder.Services.AddDb();
-// builder.Services.AddIdentity();
 
+// builder.Services.AddDb();
+builder.Services.AddDb(builder.Configuration);
+builder.Services.AddIdentity();
+// AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 // builder.Services.AddIdentity<UserModel, IdentityRole>()
 //     .AddEntityFrameworkStores<ApplicationDbContext>()
 //     .AddDefaultTokenProviders();
 // builder.Services.AddTransient<UserMiddleware>();
-
+// services.AddScoped(typeof(IBaseRepository<>), typeof(Repository<>))
 // builder.Services.AddScoped<TokenService>();
 // builder.Services.AddControllers();
 // builder.Services.AddDbContext<AppDbContext>(...);
@@ -61,6 +65,8 @@ if (app.Environment.IsDevelopment())
 // app.UseMiddleware<UserMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseAuthorization();
+
 app.UseCors("AllowAngular");
 
 var summaries = new[]

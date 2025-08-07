@@ -4,11 +4,18 @@ namespace CleaningServiceAPI.Modules.Booking.DTOs
 {
     public class BookingDto
     {
-        // Define DTO here
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public string SubscriptionId { get; set; }
+        public TimeSpan ScheduledTime { get; set; }
+        public string? SpecialInstructions { get; set; }
+        public BookingType Type { get; set; }
+        public decimal Price { get; set; }
+
     }
     public class CreateBookingDto
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int? SubscriptionId { get; set; }
         public DateTime ScheduledDate { get; set; }
         public TimeSpan ScheduledTime { get; set; }

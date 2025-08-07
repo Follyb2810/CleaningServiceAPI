@@ -8,7 +8,7 @@ namespace CleaningServiceAPI.Modules
         public static IServiceCollection AddBookingModule(this IServiceCollection services)
         {
             services.AddScoped<BookingService>();
-            services.AddScoped<BookingRepository>();
+            services.AddScoped<IBookingRepository,BookingRepository>();
             return services;
         }
     }

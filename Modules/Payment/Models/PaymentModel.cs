@@ -27,7 +27,7 @@ namespace CleaningServiceAPI.Modules.Payment.Models
     {
         public int Id { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public UserModel User { get; set; }
 
         public int? SubscriptionId { get; set; }
@@ -45,7 +45,12 @@ namespace CleaningServiceAPI.Modules.Payment.Models
         public string? PaymentReference { get; set; }
         public string? TransactionId { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime? ProcessedAt { get; set; }
+        // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        // public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        // public DateTime CreatedAt { get; set; } = DateTimeOffset.Now;
+        public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
+        public DateTimeOffset? UpdatedAt { get; set; }
+
+        public DateTimeOffset? ProcessedAt { get; set; }
     }
 };
