@@ -17,14 +17,15 @@ namespace CleaningServiceAPI.Modules.User.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<ActionResult<IEnumerable<UserModel>>> GetAllUsers()
         {
+            DateTime now = DateTime.Now;
             var users = await _service.GetAllUsersAsync();
             return Ok(users);
         }
 
-        [HttpGet("{email}")]
-        public async Task<IActionResult> GetByEmail([FromBody] string email)
+        [HttpGet("by-email")]
+        public async Task<ActionResult<UserModel>> GetByEmail([FromQuery] string email)
         {
             var user = await _service.GetUserByEmailAsync(email);
             return user == null ? NotFound() : Ok(user);
@@ -36,32 +37,27 @@ namespace CleaningServiceAPI.Modules.User.Controllers
             await _service.CreateUserAsync(user);
             return CreatedAtAction(nameof(GetByEmail), new { email = user.Email }, user);
         }
-        [HttpGet("{id}")] // GET /123?email=test@example.com
-        public ActionResult EditUser([FromQuery] string email, int id)
+
+        [HttpGet("{id}/email")]
+        public ActionResult GetUserEmail(int id, [FromQuery] string email)
         {
             return Ok(new { id, email });
         }
-        [HttpGet("user/{userId}/order/{orderId}/home")] // user/123/order/123,
-        public ActionResult GetUserOrderv(int userId, int orderId)
+
+        [HttpGet("{userId}/orders/{orderId}/home")]
+        public ActionResult GetUserOrderHome(int userId, int orderId)
         {
             // Your logic here
             return Ok(new { userId, orderId });
         }
-        [HttpGet("user/{userId}/order/{orderId}/order")] // GET /user/123/order/456
-        public ActionResult GetUserOrder([FromRoute] int userId, [FromRoute] int orderId)
-        {
-            return Ok(new { userId, orderId });
-        }
 
-        [HttpGet("user/{userId}/order/{orderId}")] // /user/123/order/456?status=paid
-        public ActionResult GetUserOrder(
+        [HttpGet("{userId}/orders/{orderId}")]
+        public ActionResult GetUserOrderWithStatus(
             [FromRoute] int userId,
             [FromRoute] int orderId,
-            [FromQuery] string status)
+            [FromQuery] string? status)
         {
-            
             return Ok(new { userId, orderId, status });
         }
-
     }
 }

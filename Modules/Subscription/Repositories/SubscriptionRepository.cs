@@ -15,7 +15,7 @@ namespace CleaningServiceAPI.Modules.Subscription.Repositories
             _context = context;
         }
 
-        public async Task<SubscriptionModel> GetSubscriptionByIdAsync(int id)
+        public async Task<SubscriptionModel> GetSubscriptionByIdAsync(string id)
         {
             return await _context.Subscriptions
                 .Include(s => s.User)
@@ -23,12 +23,12 @@ namespace CleaningServiceAPI.Modules.Subscription.Repositories
                 .Include(s => s.Bookings)
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
-        public async Task<SubscriptionPlan> GetSubscriptionPlanByIdAsync(int id)
+        public async Task<SubscriptionPlan> GetSubscriptionPlanByIdAsync(string id)
         {
             return await _context.SubscriptionPlans.FindAsync(id);
         }
 
-        public async Task<IEnumerable<SubscriptionModel>> GetSubscriptionsByUserAsync(int userId)
+        public async Task<IEnumerable<SubscriptionModel>> GetSubscriptionsByUserAsync(string userId)
         {
             return await _context.Subscriptions
                 .Include(s => s.SubscriptionPlan)
@@ -37,7 +37,7 @@ namespace CleaningServiceAPI.Modules.Subscription.Repositories
                 .ToListAsync();
         }
 
-        public async Task<SubscriptionModel> UpdateSubscriptionStatusAsync(int id, SubscriptionStatus status)
+        public async Task<SubscriptionModel> UpdateSubscriptionStatusAsync(string id, SubscriptionStatus status)
         {
             var subscription = await FindByIdAsync(id);
             if (subscription == null) return null;
@@ -54,7 +54,7 @@ namespace CleaningServiceAPI.Modules.Subscription.Repositories
             return subscription;
         }
 
-        public async Task<IEnumerable<BookingModel>> GenerateRecurringBookingsAsync(int subscriptionId)
+        public async Task<IEnumerable<BookingModel>> GenerateRecurringBookingsAsync(string subscriptionId)
         {
             var subscription = await GetSubscriptionByIdAsync(subscriptionId);
             if (subscription == null || subscription.Status != SubscriptionStatus.Active)

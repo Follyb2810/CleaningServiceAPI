@@ -11,9 +11,9 @@ namespace CleaningServiceAPI.Modules.User.Repositories
     public interface IUserRepository : IBaseRepository<UserModel>
     {
         Task<UserModel?> GetByEmailAsync(string email);
-        Task<UserModel?> GetUserByIdAsync(int id);
+        Task<UserModel?> GetUserByIdAsync(string id);
         Task<IEnumerable<UserModel>> GetAllUsersAsync();
-        Task<UserModel> CreateUserAsync(CreateUserDto user, string hashedPassword); Task<UserModel?> UpdateUserAsync(int id, UpdateUserDto dto);
+        Task<UserModel> CreateUserAsync(CreateUserDto user, string hashedPassword); Task<UserModel?> UpdateUserAsync(string id, UpdateUserDto dto);
 
 
 

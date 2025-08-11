@@ -5,7 +5,7 @@ namespace CleaningServiceAPI.Modules.Cleaner.Models
 {
     public class CleanerModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -37,9 +37,9 @@ namespace CleaningServiceAPI.Modules.Cleaner.Models
     }
     public class CleanerAvailability
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
-        public int CleanerId { get; set; }
+        public string CleanerId { get; set; }
         public CleanerModel Cleaner { get; set; }
 
         public DayOfWeek DayOfWeek { get; set; }

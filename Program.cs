@@ -5,6 +5,7 @@ using CleaningServiceAPI.Common;
 using Microsoft.Extensions.Options;
 using CleaningServiceAPI.Extensions;
 using CleaningServiceAPI.Seed;
+using CleaningServiceAPI.Midlleware;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -63,6 +64,11 @@ if (app.Environment.IsDevelopment())
 
 
 // app.UseMiddleware<UserMiddleware>();
+app.UseMiddleware<ExceptionMiddleware>();
+// builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+// app.UseExceptionHandler();
+
+
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseAuthorization();
@@ -91,6 +97,7 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast");
 app.MapControllers();
+
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)

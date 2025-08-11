@@ -21,7 +21,7 @@ namespace CleaningServiceAPI.Modules.User.Repositories
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public async Task<UserModel?> GetUserByIdAsync(int id)
+        public async Task<UserModel?> GetUserByIdAsync(string id)
         {
             return await _context.Users
                 .Include(u => u.Subscriptions)
@@ -32,8 +32,8 @@ namespace CleaningServiceAPI.Modules.User.Repositories
 
         public async Task<UserModel> CreateUserAsync(CreateUserDto dto, string hashedPassword)
         {
-            var emailExist = await GetByEmailAsync(dto.Email);
-            if (emailExist is not null)
+            var existing = await GetByEmailAsync(dto.Email);
+            if (existing is not null)
                 throw new InvalidOperationException("User with this email already exists.");
 
             var newUser = UserMapper.ToModel(dto, hashedPassword);
@@ -49,17 +49,20 @@ namespace CleaningServiceAPI.Modules.User.Repositories
                 .ToListAsync();
         }
 
-        public async Task<UserModel?> UpdateUserAsync(int id, UpdateUserDto dto)
+        public async Task<UserModel?> UpdateUserAsync(string id, UpdateUserDto dto)
         {
             var user = await FindByIdAsync(id);
-            if (user == null) return null;
+            if (user is null)
+                throw new KeyNotFoundException($"User with ID {id} not found.");
 
-            user.FullName = dto.FullName;
-            // user.Role = dto.Role;
-            user.UpdatedAt = DateTime.UtcNow;
-
+            user.MapUpdate(dto);
             await _context.SaveChangesAsync();
             return user;
+        }
+
+        public async Task DeleteUserAsync(string id)
+        {
+            await DeleteAsync(id);
         }
     }
 }

@@ -23,19 +23,20 @@ namespace CleaningServiceAPI.Modules.Booking.Models
 
     public class BookingModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public string UserId { get; set; }
         public UserModel User { get; set; }
 
-        public int? SubscriptionId { get; set; } // Null for one-time bookings
+        public string? SubscriptionId { get; set; } // Null for one-time bookings
         public SubscriptionModel? Subscription { get; set; }
 
-        public int? CleanerId { get; set; } // Assigned cleaner
+        public string? CleanerId { get; set; } // Assigned cleaner
         public CleanerModel? Cleaner { get; set; }
 
         public DateTimeOffset ScheduledDate { get; set; }
         public TimeSpan ScheduledTime { get; set; }
+        // public string DurationHours { get; set; }
         public int DurationHours { get; set; }
 
         public string ServiceAddress { get; set; }
@@ -49,13 +50,9 @@ namespace CleaningServiceAPI.Modules.Booking.Models
 
         public DateTimeOffset? CompletedAt { get; set; }
         public string? CleanerNotes { get; set; }
-        public int? Rating { get; set; } // 1-5 stars
+        public string? Rating { get; set; } // 1-5 stars
         public string? CustomerFeedback { get; set; }
 
-        // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        // public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        // public DateTime CreatedAt { get; set; } = DateTimeOffset.Now;
-        // public DateTime? UpdatedAt { get; set; }
         public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
         public DateTimeOffset? UpdatedAt { get; set; }
     }

@@ -29,7 +29,7 @@ namespace CleaningServiceAPI.Modules.Subscription.Mappers
                 Status = SubscriptionStatus.Active
             };
         }
-        public static BookingModel ToCreateSubscriptionBooking(this SubscriptionModel subscription, int subscriptionId, DateTimeOffset currentDate)
+        public static BookingModel ToCreateSubscriptionBooking(this SubscriptionModel subscription, string subscriptionId, DateTimeOffset currentDate)
         {
             return new BookingModel
             {

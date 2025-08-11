@@ -31,8 +31,6 @@ namespace CleaningServiceAPI.Modules.Booking.Mappers
                 SpecialInstructions = entity.SpecialInstructions,
                 Type = entity.Type,
                 Price = entity.Price,
-
-
             };
         }
         public static List<BookingDto> ToDtoList(IEnumerable<BookingModel> bookings)

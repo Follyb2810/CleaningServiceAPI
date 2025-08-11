@@ -2,9 +2,9 @@ namespace CleaningServiceAPI.Modules.Cleaner.Services
 {
 public class CleanerService
 {
-    public object First()
+    public Task<object> First()
     {
-        return new { message = "Cleaner service works!" };
+        return  Task.FromResult((object)new { message = "Cleaner service works!" });
     }
 }
 }

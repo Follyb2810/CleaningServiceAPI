@@ -20,13 +20,20 @@ namespace CleaningServiceAPI.Modules.Booking.Repositories
         {
             _context = context;
         }
+        // pun  async Task< BookingRepository.CreateBookingAsync
+        public async Task<BookingModel> CreateBookingAsync(CreateBookingDto dto)
+        {
+            var newBooking = BookingMapper.ToModel(dto);
+            await CreateAsync(newBooking);
+            return newBooking;
+        }
         public async Task<IEnumerable<BookingModel>> GetUpcomingBookingsForUser(string userId)
         {
             return await _context.Bookings
                 .Where(b => b.UserId == userId && b.ScheduledDate > DateTime.Now)
                 .ToListAsync();
         }
-        public async Task<IEnumerable<BookingModel>> GetBookingsByUserAsync(int userId)
+        public async Task<IEnumerable<BookingModel>> GetBookingsByUserAsync(string userId)
         {
             return await _context.Bookings.Include(b => b.Cleaner)
                                     .Include(b => b.Subscription)
@@ -34,7 +41,7 @@ namespace CleaningServiceAPI.Modules.Booking.Repositories
                                     .OrderByDescending(b => b.ScheduledDate)
                                     .ToListAsync();
         }
-        public async Task<IEnumerable<BookingModel>> GetBookingsByCleanerAsync(int cleanerId)
+        public async Task<IEnumerable<BookingModel>> GetBookingsByCleanerAsync(string cleanerId)
         {
             return await _context.Bookings.Include(b => b.Cleaner)
                 .Include(b => b.Subscription)
@@ -47,7 +54,7 @@ namespace CleaningServiceAPI.Modules.Booking.Repositories
             .Where(b => b.ScheduledDate >= startDate && b.ScheduledDate <= endDate)
             .OrderBy(b => b.ScheduledDate).ToListAsync();
         }
-        public async Task<BookingModel> AssignCleanerAsync(int bookingId, int cleanerId)
+        public async Task<BookingModel> AssignCleanerAsync(string bookingId, string cleanerId)
         {
             var booking = await _context.Bookings.FindAsync(bookingId);
             if (booking == null) return null;
@@ -55,12 +62,11 @@ namespace CleaningServiceAPI.Modules.Booking.Repositories
             if (cleaner != null || !cleaner.IsAvailable) return null;
             booking.CleanerId = cleanerId;
             booking.UpdatedAt = DateTimeOffset.UtcNow;
-            // booking.UpdateAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
             return await GetBookingByIdAsync(bookingId);
 
         }
-        public async Task<BookingModel> GetBookingByIdAsync(int id)
+        public async Task<BookingModel> GetBookingByIdAsync(string id)
         {
             return await _context.Bookings
                 .Include(b => b.User)
@@ -78,7 +84,7 @@ namespace CleaningServiceAPI.Modules.Booking.Repositories
             return booking;
 
         }
-        public async Task<BookingModel> CancelBookingAsync(int bookingId)
+        public async Task<BookingModel> CancelBookingAsync(string bookingId)
         {
             var booking = await FindByIdAsync(bookingId);
             if (booking == null) return null;

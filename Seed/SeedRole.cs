@@ -15,10 +15,11 @@ namespace CleaningServiceAPI.Seed
             foreach (UserRole role in Enum.GetValues(typeof(UserRole)))
             {
                 var roleName = Enum.GetName(typeof(UserRole), role);
-                if (await roleManager.RoleExistsAsync(roleName) == false)
+                if (!string.IsNullOrEmpty(roleName) && !await roleManager.RoleExistsAsync(roleName))
                 {
                     await roleManager.CreateAsync(new IdentityRole(roleName));
                 }
+
             }
         }
     }

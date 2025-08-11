@@ -25,15 +25,15 @@ namespace CleaningServiceAPI.Modules.Payment.Models
 
     public class PaymentModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public string UserId { get; set; }
         public UserModel User { get; set; }
 
-        public int? SubscriptionId { get; set; }
+        public string? SubscriptionId { get; set; }
         public SubscriptionModel? Subscription { get; set; }
 
-        public int? BookingId { get; set; }
+        public string? BookingId { get; set; }
         public BookingModel? Booking { get; set; }
 
         // [Column(TypeName = "decimal(10,2)")]

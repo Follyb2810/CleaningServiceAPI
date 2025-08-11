@@ -8,32 +8,16 @@ using CleaningServiceAPI.Contract;
 using CleaningServiceAPI.Modules.Booking.DTOs;
 
 
-
-// namespace CleaningServiceAPI.Modules.Subscription.Repositories
-// {
-//     public interface ISubscriptionRepository : IBaseRepository<SubscriptionModel>
-//     {
-//         Task<SubscriptionModel> GetSubscriptionByIdAsync(int id);
-
-// Task<SubscriptionPlan> GetSubscriptionPlanByIdAsync(int id);
-
-//         Task<IEnumerable<SubscriptionModel>> GetSubscriptionsByUserAsync(int userId);
-//         Task<SubscriptionModel> UpdateSubscriptionStatusAsync(int id, SubscriptionStatus status);
-//         Task<IEnumerable<BookingModel>> GenerateRecurringBookingsAsync(int subscriptionId);
-//         Task<IEnumerable<SubscriptionPlan>> GetAllSubscriptionPlansAsync();
-//     }
-// }
-
 namespace CleaningServiceAPI.Modules.Subscription.Repositories
 {
     public interface ISubscriptionRepository : IBaseRepository<SubscriptionModel>
     {
-        Task<SubscriptionModel> GetSubscriptionByIdAsync(int id);
-        Task<IEnumerable<SubscriptionModel>> GetSubscriptionsByUserAsync(int userId);
-        Task<SubscriptionModel> UpdateSubscriptionStatusAsync(int id, SubscriptionStatus status);
-        Task<IEnumerable<BookingModel>> GenerateRecurringBookingsAsync(int subscriptionId);
+        Task<SubscriptionModel> GetSubscriptionByIdAsync(string id);
+        Task<IEnumerable<SubscriptionModel>> GetSubscriptionsByUserAsync(string userId);
+        Task<SubscriptionModel> UpdateSubscriptionStatusAsync(string id, SubscriptionStatus status);
+        Task<IEnumerable<BookingModel>> GenerateRecurringBookingsAsync(string subscriptionId);
         Task<IEnumerable<SubscriptionPlan>> GetAllSubscriptionPlansAsync();
-        Task<SubscriptionPlan> GetSubscriptionPlanByIdAsync(int id);
-        
+        Task<SubscriptionPlan> GetSubscriptionPlanByIdAsync(string id);
+
     }
 }

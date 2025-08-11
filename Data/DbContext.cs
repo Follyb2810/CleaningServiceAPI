@@ -145,7 +145,7 @@ namespace CleaningServiceAPI.Data
             modelBuilder.Entity<SubscriptionPlan>().HasData(
                 new SubscriptionPlan
                 {
-                    Id = 1,
+                    Id = "1",
                     Name = "Weekly Standard",
                     Description = "Standard cleaning service every week",
                     Price = 80.00m,
@@ -155,7 +155,7 @@ namespace CleaningServiceAPI.Data
                 },
                 new SubscriptionPlan
                 {
-                    Id = 2,
+                    Id = "2",
                     Name = "Bi-Weekly Standard",
                     Description = "Standard cleaning service every two weeks",
                     Price = 90.00m,
@@ -165,7 +165,7 @@ namespace CleaningServiceAPI.Data
                 },
                 new SubscriptionPlan
                 {
-                    Id = 3,
+                    Id = "3",
                     Name = "Monthly Deep Clean",
                     Description = "Deep cleaning service once a month",
                     Price = 150.00m,

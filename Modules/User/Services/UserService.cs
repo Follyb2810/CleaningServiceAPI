@@ -15,7 +15,7 @@ namespace CleaningServiceAPI.Modules.User.Services
         {
             _userRepository = userRepository;
         }
-        public async Task UpdateUserAsync(int id, UserModel updatedUser)
+        public async Task UpdateUserAsync(string id, UserModel updatedUser)
         {
             await _userRepository.UpdateAsync(id, updatedUser);
             //      var user = await _repo.FindByIdAsync(id);

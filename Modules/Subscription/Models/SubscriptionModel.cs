@@ -15,7 +15,8 @@ namespace CleaningServiceAPI.Modules.Subscription.Models
     }
     public class SubscriptionPlan
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
+        // public int Id { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -27,7 +28,9 @@ namespace CleaningServiceAPI.Modules.Subscription.Models
         public decimal Price { get; set; }
 
         public int CleaningFrequencyDays { get; set; } // 7 for weekly, 30 for monthly, etc.
+        // public int CleaningFrequencyDays { get; set; } // 7 for weekly, 30 for monthly, etc.
         public int DurationHours { get; set; }
+        // public int DurationHours { get; set; }
         public bool IsActive { get; set; } = true;
 
         public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
@@ -40,12 +43,14 @@ namespace CleaningServiceAPI.Modules.Subscription.Models
     // User subscriptions
     public class SubscriptionModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
+        // public int Id { get; set; }
 
         public string UserId { get; set; }
         public UserModel User { get; set; }
 
-        public int SubscriptionPlanId { get; set; }
+        public string SubscriptionPlanId { get; set; }
+        // public int SubscriptionPlanId { get; set; }
         public SubscriptionPlan? SubscriptionPlan { get; set; }
 
         public SubscriptionStatus Status { get; set; } = SubscriptionStatus.Active;

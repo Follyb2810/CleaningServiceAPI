@@ -9,10 +9,11 @@ namespace CleaningServiceAPI.Modules.Subscription.DTOs
 
     public class CreateSubscriptionDto
     {
-        public int UserId { get; set; }
-        public int SubscriptionPlanId { get; set; }
+        public string UserId { get; set; }
+        public string SubscriptionPlanId { get; set; }
         public DateTime StartDate { get; set; }
         public string PaymentMethod { get; set; }
         public string PaymentReference { get; set; }
+        public int DurationHours { get; set; }
     }
 }

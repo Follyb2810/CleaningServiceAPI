@@ -8,9 +8,9 @@ namespace CleaningServiceAPI.Contract
     public interface IBaseRepository<T> where T : class
     {
         Task<IEnumerable<T>> GetAllAsync();
-        Task<T?> FindByIdAsync(int id);
+        Task<T?> FindByIdAsync(string id);
         Task CreateAsync(T entity);
-        Task UpdateAsync(int id, T entity);
-        Task DeleteAsync(int id);
+        Task UpdateAsync(string id, T entity);
+        Task DeleteAsync(string id);
     }
 }

@@ -19,7 +19,7 @@ namespace CleaningServiceAPI.Contract
             return await _dbSet.ToListAsync();
         }
 
-        public async Task<T?> FindByIdAsync(int id)
+        public async Task<T?> FindByIdAsync(string id)
         {
             return await _dbSet.FindAsync(id);
         }
@@ -30,29 +30,26 @@ namespace CleaningServiceAPI.Contract
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(int id, T entity)
+        public async Task UpdateAsync(string id, T entity)
         {
             var existingEntity = await FindByIdAsync(id);
             if (existingEntity is null)
-            {
-                throw new KeyNotFoundException($"Entity with ID {id} was not found.");
-            }
+                throw new KeyNotFoundException($"Entity with ID {id} not found.");
 
             _dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
             await _dbContext.SaveChangesAsync();
         }
 
-
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(string id)
         {
             var entity = await FindByIdAsync(id);
             if (entity is null)
-            {
-                throw new KeyNotFoundException($"Entity with ID {id} was not found.");
-            }
+                throw new KeyNotFoundException($"Entity with ID {id} not found.");
 
             _dbSet.Remove(entity);
             await _dbContext.SaveChangesAsync();
         }
     }
 }
+
+
